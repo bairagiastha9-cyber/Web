@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mission: Sunny ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@1,600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f1ecff;--soft:#b9b4dd;--gold:#ffd479;--gold2:#ff9f6b;--ice:#9fd4ff;--glass:rgba(255,255,255,.06);--edge:rgba(255,255,255,.15);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:#070816;background-image:radial-gradient(ellipse at 18% 8%,#2d1b5e 0,transparent 52%),radial-gradient(ellipse at 90% 90%,#0e3b63 0,transparent 55%),radial-gradient(ellipse at 60% 45%,rgba(120,60,140,.25) 0,transparent 50%);font-family:"DM Sans",system-ui,sans-serif;color:var(--ink);overflow:hidden}
+[hidden]{display:none!important}
+#sf{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.stage{position:relative;z-index:1;height:100%;display:flex;overflow-y:auto;padding:20px;box-sizing:border-box}
+.card{margin:auto;width:min(450px,100%);box-sizing:border-box;background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--edge);border-radius:26px;padding:34px 24px 28px;text-align:center;box-shadow:0 0 60px rgba(120,90,255,.18);min-height:380px;display:flex;align-items:center}
+.screen{display:none;flex-direction:column;align-items:center;gap:18px;width:100%}
+.screen.on{display:flex;animation:in .7s ease both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.big{font-family:Cinzel,Georgia,serif;font-weight:500;font-size:clamp(22px,6.2vw,30px);line-height:1.3;margin:0;letter-spacing:.04em}
+.big em{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-weight:600;font-size:1.25em;color:var(--gold);letter-spacing:0}
+.tag{font-size:11px;letter-spacing:.35em;color:var(--ice);margin:0}
+.msg{font-size:16px;line-height:1.65;color:var(--soft);margin:0}
+.msg b{color:var(--gold);font-weight:500}
+.ico{font-size:50px;line-height:1}
+.float{animation:bob 2.6s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-5px)}to{transform:translateY(6px)}}
+.name{cursor:pointer}
+.btn{border:0;border-radius:999px;padding:14px 28px;font:500 15px "DM Sans",system-ui,sans-serif;letter-spacing:.06em;color:#2a1a05;background:linear-gradient(135deg,var(--gold),var(--gold2));box-shadow:0 0 26px rgba(255,190,110,.35);cursor:pointer;transition:transform .2s}
+.btn:active{transform:scale(.95)}
+.ghost{border:1px solid var(--edge);background:transparent;color:var(--soft);border-radius:999px;padding:12px 20px;font:500 14px "DM Sans",system-ui,sans-serif;cursor:pointer}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.cnt{font-family:Cinzel,Georgia,serif;font-size:96px;color:var(--gold);text-shadow:0 0 40px rgba(255,190,110,.6);animation:beat .9s ease-in-out infinite alternate}
+@keyframes beat{to{transform:scale(1.15)}}
+.pls{display:flex;flex-wrap:wrap;gap:16px 14px;justify-content:center}
+.pl{background:none;border:0;padding:0;cursor:pointer;color:var(--soft);font:400 11px "DM Sans",system-ui,sans-serif;letter-spacing:.1em;display:flex;flex-direction:column;align-items:center;gap:10px;width:84px}
+.pl i{display:block;width:58px;height:58px;border-radius:50%;position:relative;background:radial-gradient(circle at 32% 30%,var(--a),var(--b) 72%);box-shadow:0 0 22px var(--b);animation:bob 3.2s ease-in-out infinite alternate}
+.pl.ring i::after{content:"";position:absolute;left:-14px;right:-14px;top:50%;height:16px;margin-top:-8px;border:2px solid rgba(255,255,255,.55);border-radius:50%;transform:rotate(-18deg)}
+.pl.seen i{outline:2px solid var(--gold);outline-offset:4px}
+.tx{min-height:92px;width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:var(--glass);border:1px solid var(--edge);border-radius:18px;padding:14px 16px;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-weight:600;font-size:21px;line-height:1.4;color:var(--ink)}
+.swap{animation:in .5s ease both}
+.con{width:100%;max-width:340px;height:auto;background:rgba(255,255,255,.03);border:1px solid var(--edge);border-radius:18px}
+.con text{fill:var(--soft);font:10px "DM Sans",sans-serif;text-anchor:middle;pointer-events:none}
+.con line{stroke:var(--gold);stroke-width:1.5;stroke-linecap:round}
+.con .st{fill:#fff;transition:fill .3s}
+.con .st.on{fill:var(--gold)}
+.con g{cursor:pointer}
+.field{position:relative;width:100%;height:200px;border:1px solid var(--edge);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.03)}
+.mt{position:absolute;left:-14%;background:none;border:0;padding:0;font-size:30px;cursor:pointer;animation:fly 2.6s linear forwards}
+@keyframes fly{to{left:108%}}
+.ln{opacity:0;animation:in .9s ease forwards;animation-delay:calc(var(--d)*1s)}
+.cert{border:1px solid var(--gold);border-radius:14px;padding:12px 14px;color:var(--gold);font-size:13px;line-height:1.6;letter-spacing:.06em;background:rgba(255,212,121,.06)}
+.pop{position:fixed;z-index:9;pointer-events:none;font-size:22px;color:var(--gold);animation:pop 1.2s ease-out forwards}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(.4);opacity:1}to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2);opacity:0}}
+@media (prefers-reduced-motion:reduce){.float,.pl i,.cnt{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="sf"></canvas>
+<div class="stage"><main class="card">
+
+<section class="screen on" id="intro">
+  <div class="ico float">🚀</div>
+  <p class="tag">MISSION CONTROL</p>
+  <h1 class="big">A mission for <em class="name"></em></h1>
+  <p class="msg">One small crew. One big thank-you.</p>
+  <button class="btn" id="launch">begin countdown</button>
+  <p class="msg" style="font-size:12px;opacity:.7">psst… tap the name for a surprise</p>
+</section>
+
+<section class="screen" id="count">
+  <p class="tag">LAUNCH SEQUENCE</p>
+  <div class="cnt" id="cn">3</div>
+</section>
+
+<section class="screen" id="map">
+  <p class="tag">DESTINATION 1</p>
+  <h2 class="big">Our little solar system</h2>
+  <div class="pls" id="pls"></div>
+  <div class="tx" id="tx"></div>
+  <button class="btn" id="mgo" hidden>continue →</button>
+</section>
+
+<section class="screen" id="con">
+  <p class="tag">DESTINATION 2</p>
+  <h2 class="big">Find the constellation</h2>
+  <svg class="con" id="cg" viewBox="0 0 300 200" role="img" aria-label="Connect the numbered stars"></svg>
+  <p class="msg" id="cm" style="min-height:3em"></p>
+  <button class="btn" id="cgo" hidden>continue →</button>
+</section>
+
+<section class="screen" id="met">
+  <p class="tag">DESTINATION 3</p>
+  <h2 class="big">Catch the shooting stars</h2>
+  <div class="field" id="field"></div>
+  <div class="tx" id="mw" style="min-height:70px;font-size:19px"></div>
+  <p class="msg" id="mn" style="font-size:13px"></p>
+  <button class="btn" id="mgo2" hidden>continue →</button>
+</section>
+
+<section class="screen" id="final">
+  <div class="ico ln float" style="--d:0">🛰️</div>
+  <p class="tag ln" style="--d:.2">INCOMING TRANSMISSION</p>
+  <p class="big ln" style="--d:.5">For <em class="name"></em></p>
+  <p class="msg ln" style="--d:1.5">As long as I exist in this world, you will be <b>loved</b> and <b>appreciated</b> for everything you do in your life.</p>
+  <p class="msg ln" style="--d:3">And I’ll always be there with you.</p>
+  <p class="big ln" style="--d:4.4"><em>Always.</em> ✦</p>
+  <div class="cert ln" style="--d:5.4">★ A star named “<span id="cs"></span>” now exists.<br>Registered by <span id="from"></span>. Valid forever.</div>
+  <div class="row ln" style="--d:6"><button class="btn" id="sig">send a signal ✨</button><button class="ghost" id="again">replay</button></div>
+</section>
+
+</main></div>
+
+<script>
+const TO="Sunny", FROM="Aastha";
+const $=s=>document.querySelector(s);
+const show=id=>document.querySelectorAll(".screen").forEach(e=>e.classList.toggle("on",e.id===id));
+document.querySelectorAll(".name").forEach(n=>n.textContent=TO);
+$("#from").textContent=FROM;$("#cs").textContent=TO;
+document.title="Mission: "+TO+" ✦";
+
+function burst(x,y,n=14,set=["✦","✧","⭐","🌠"]){
+  for(let k=0;k<n;k++){
+    const s=document.createElement("span");
+    const a=Math.random()*6.283,d=60+Math.random()*130;
+    s.className="pop";s.textContent=set[k%set.length];
+    s.style.cssText="left:"+x+"px;top:"+y+"px;--dx:"+Math.cos(a)*d+"px;--dy:"+(Math.sin(a)*d-40)+"px";
+    document.body.appendChild(s);setTimeout(()=>s.remove(),1300);
+  }
+}
+const mid=el=>{const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
+document.addEventListener("click",e=>{if(e.target.classList.contains("name"))burst(e.clientX,e.clientY,16)});
+
+/* starfield */
+const cv=$("#sf"),cx=cv.getContext("2d");let W=0,H=0,speed=.0007;
+const rz=()=>.35+Math.random()*.65;
+const S=Array.from({length:170},()=>({x:Math.random()*2-1,y:Math.random()*2-1,z:Math.random()*.9+.1}));
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+addEventListener("resize",size);size();
+cx.lineCap="round";
+(function loop(){
+  cx.clearRect(0,0,W,H);
+  const k=Math.max(W,H)*.12;
+  for(const s of S){
+    const pz=s.z;s.z-=speed;
+    const x=W/2+s.x/s.z*k,y=H/2+s.y/s.z*k;
+    if(s.z<=.03||x<-60||x>W+60||y<-60||y>H+60){s.x=Math.random()*2-1;s.y=Math.random()*2-1;s.z=rz();continue}
+    const px=W/2+s.x/pz*k,py=H/2+s.y/pz*k;
+    cx.strokeStyle="rgba(255,255,255,"+Math.min(1,(1-s.z)*1.2+.2)+")";
+    cx.lineWidth=.7+(1-s.z)*1.6;
+    cx.beginPath();cx.moveTo(px,py);cx.lineTo(x,y);cx.stroke();
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* countdown */
+$("#launch").onclick=()=>{
+  show("count");let n=3;$("#cn").textContent=n;
+  const t=setInterval(()=>{
+    n--;
+    if(n>0)$("#cn").textContent=n;
+    else{clearInterval(t);$("#cn").textContent="🚀";speed=.03;setTimeout(()=>{speed=.0007;show("map");startMap()},2200)}
+  },900);
+};
+
+/* planets */
+const PL=[["Grateful","#ffb27a","#c4552b","I’m so grateful to have you in my life."],["The Best","#a9dcff","#2d6ca8","You’re the best one I’ve ever met."],["Closeness","#d2b6ff","#5b3aa8","I’ve never felt this close to anyone this quickly."],["Decades","#9ff5d2","#1f8a6a","With you, it feels like I’ve known you for decades."],["Special","#ffe08f","#b8731a","You are sooo special to me. Like veryyy, veryyy special."]];
+let seen=0;
+function startMap(){
+  seen=0;$("#mgo").hidden=true;$("#tx").textContent="Tap a planet to visit it";
+  const w=$("#pls");w.innerHTML="";
+  PL.forEach((p,k)=>{
+    const b=document.createElement("button");b.className="pl"+(k===2?" ring":"");
+    b.style.cssText="--a:"+p[1]+";--b:"+p[2];
+    b.innerHTML="<i></i>"+p[0];
+    b.onclick=e=>{
+      if(!b.classList.contains("seen")){b.classList.add("seen");seen++}
+      const d=document.createElement("div");d.className="swap";d.textContent=p[3];
+      $("#tx").innerHTML="";$("#tx").appendChild(d);
+      burst(e.clientX,e.clientY,6);
+      if(seen===PL.length)$("#mgo").hidden=false;
+    };
+    w.appendChild(b);
+  });
+}
+$("#mgo").onclick=()=>{show("con");startCon()};
+
+/* constellation */
+const PT=[[236,28],[112,24],[66,72],[150,100],[236,134],[190,180],[66,176]];
+let cn=0;
+function startCon(){
+  const g=$("#cg");g.innerHTML="";cn=0;$("#cgo").hidden=true;$("#cm").textContent="Connect the stars in order, 1 → 7";
+  const NS="http://www.w3.org/2000/svg";
+  const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+  const LG=mk("g",{}),DG=mk("g",{});g.append(LG,DG);
+  PT.forEach((p,k)=>{
+    const s=mk("g",{}),dot=mk("circle",{cx:p[0],cy:p[1],r:5,class:"st"}),tx=mk("text",{x:p[0],y:p[1]-11});
+    tx.textContent=k+1;
+    s.append(mk("circle",{cx:p[0],cy:p[1],r:16,fill:"transparent"}),dot,tx);
+    s.onclick=e=>{
+      if(k!==cn){$("#cm").textContent="Not that one! Next is star "+(cn+1)+" ✦";return}
+      dot.classList.add("on");
+      if(k>0)LG.append(mk("line",{x1:PT[k-1][0],y1:PT[k-1][1],x2:p[0],y2:p[1]}));
+      burst(e.clientX,e.clientY,6);
+      if(++cn===PT.length){$("#cm").textContent="Constellation “"+TO+"” discovered ✨ Named by "+FROM;$("#cgo").hidden=false}
+      else $("#cm").textContent="Great! Now star "+(cn+1);
+    };
+    DG.append(s);
+  });
+}
+$("#cgo").onclick=()=>{show("met");startMet()};
+
+/* shooting stars */
+const wishes=["May we stay this close forever.","May you always laugh the loudest.","May every dream you chase come true.","May you never feel alone.","May I always be there with you."];
+let mc=0,mtimer=0;
+function startMet(){
+  mc=0;$("#mgo2").hidden=true;$("#field").innerHTML="";
+  $("#mw").textContent="Tap the shooting stars as they fly by";$("#mn").textContent="0 / 5 wishes";
+  clearInterval(mtimer);mtimer=setInterval(spawn,1000);spawn();
+}
+function spawn(){
+  if(mc>=5)return;
+  const b=document.createElement("button");b.className="mt";b.textContent="🌠";b.setAttribute("aria-label","shooting star");
+  b.style.top=(8+Math.random()*70)+"%";b.style.animationDuration=(2+Math.random()*1.4)+"s";
+  b.onclick=e=>{
+    b.remove();$("#mw").textContent=wishes[mc];mc++;$("#mn").textContent=mc+" / 5 wishes";
+    burst(e.clientX,e.clientY,10);
+    if(mc>=5){clearInterval(mtimer);$("#mgo2").hidden=false}
+  };
+  b.onanimationend=()=>b.remove();
+  $("#field").appendChild(b);
+}
+$("#mgo2").onclick=()=>show("final");
+
+/* final */
+$("#sig").onclick=e=>{
+  const r=e.currentTarget.getBoundingClientRect();
+  burst(r.left+r.width/2,r.top,30,["✦","✧","⭐","🌠","💛"]);
+};
+$("#again").onclick=()=>show("intro");
+</script>
+</body>
+</html>
